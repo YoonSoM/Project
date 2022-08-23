@@ -61,8 +61,39 @@ def rle2mask(mask_rle, shape=(1600,256)):
         img[lo:hi] = 1
     return img.reshape(shape).T
 
+!mkdir /content/mask_img
+
+from PIL import Image
+
+for idx in range(len(df)):
+  ### pd를 가져옴
+    img_id = df.loc[idx]['id']
+    ### 행으로 뽑기
+    img_h = df.loc[idx]['img_height']
+    img_w = df.loc[idx]['img_width']
+    img_rle = df.loc[idx]['rle']
+    ###iloc은 열뽑기
+
+
+    mask_img = rle2mask(img_rle, shape=(img_w, img_h))
+    mask_img = Image.fromarray(mask_img)
+    mask_img.save(f'/content/mask_img/{img_id}.png')
+    ### 경로에 image id포함 시켜서 폴더에 담기
+
+# mask_1 = rle2mask(df[df["id"]==img_id_1]["rle"].iloc[-1], (img_1.shape[1], img_1.shape[0]))
+# ### 
+# mask_1.shape
+
 mask_1 = rle2mask(df[df["id"]==img_id_1]["rle"].iloc[-1], (img_1.shape[1], img_1.shape[0]))
 mask_1.shape
+
+mask = Image.open('/content/mask_img/10044.png')
+### 이미지 경로 불러오기
+mask = np.array(mask)
+### array형식으로 변경 해주기
+plt.imshow(mask * 255)
+### mask가 안보이니 곱해주기
+plt.axis("off")
 
 plt.figure(figsize=(10,10))
 # plt.imshow(img_1) ### image랑 같이 뽑으려면 주석 풀기
