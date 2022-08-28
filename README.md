@@ -3,4 +3,5 @@ project overview
 Modifying
 -----------------------------------
 unet\
-mmsegmentation
+mmsegmentation\
+fast ai
