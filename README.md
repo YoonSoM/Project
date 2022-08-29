@@ -5,3 +5,4 @@ Modifying
 unet\
 mmsegmentation\
 fast ai
+efficientnet
